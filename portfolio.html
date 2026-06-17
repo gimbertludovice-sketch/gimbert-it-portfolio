@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Gimbert Ludovice — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root{
+  --ink:  #09111f;
+  --ink2: #0d1a2d;
+  --ink3: #132236;
+  --ink4: #1a2e48;
+  --sky:  #3b82f6;
+  --sky2: #60a5fa;
+  --teal: #0d9488;
+  --mint: #34d399;
+  --violet:#7c3aed;
+  --rose: #f43f5e;
+  --gold: #f59e0b;
+  --g1: rgba(255,255,255,0.04);
+  --g2: rgba(255,255,255,0.08);
+  --g3: rgba(255,255,255,0.14);
+  --g5: rgba(255,255,255,0.5);
+  --g9: #fff;
+  --muted:#4a6a8a;
+  --sub:  #7a9aba;
+  --body: #9cb8d0;
+  --fh:'Inter',system-ui,sans-serif;
+  --fd:'Playfair Display',Georgia,serif;
+  --fm:'JetBrains Mono','Courier New',monospace;
+  --r8:8px; --r12:12px; --r16:16px; --r20:20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  height:100%;
+  font-family:var(--fh);
+}
+body{
+  background:var(--ink);
+  color:var(--g9);
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  height:100dvh;
+  overflow:hidden;
+}
+
+/* ═══════════════════════════════════════════
+   TOPBAR
+═══════════════════════════════════════════ */
+.topbar{
+  flex-shrink:0;
+  background:rgba(9,17,31,0.95);
+  border-bottom:1px solid var(--g2);
+  padding:0 20px;
+  padding-top:env(safe-area-inset-top);
+  display:flex;align-items:center;
+  justify-content:space-between;
+  height:54px;
+  box-shadow:0 1px 30px rgba(0,0,0,0.4);
+  z-index:100;
+}
+.brand{display:flex;align-items:center;gap:10px}
+.avatar{
+  width:34px;height:34px;border-radius:50%;
+  background:linear-gradient(135deg,var(--sky),var(--violet));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:0.72rem;color:#fff;flex-shrink:0;
+  box-shadow:0 0 0 2px rgba(59,130,246,0.3);
+}
+.brand-name{font-size:0.88rem;font-weight:800;color:var(--g9);letter-spacing:-0.2px}
+.brand-sub{font-family:var(--fm);font-size:0.55rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+.pts-pill{
+  font-family:var(--fm);font-size:0.68rem;
+  background:var(--g1);border:1px solid var(--g2);
+  padding:5px 14px;border-radius:20px;
+  color:var(--sub);letter-spacing:0.3px;
+}
+.pts-pill strong{color:var(--gold)}
+
+/* ═══════════════════════════════════════════
+   NAV TABS
+═══════════════════════════════════════════ */
+.nav-wrap{
+  flex-shrink:0;
+  background:rgba(9,17,31,0.97);
+  border-bottom:1px solid var(--g2);
+  padding:0 6px;
+  display:flex;gap:0;
+  position:relative;
+  z-index:99;
+}
+
+.tab{
+  flex:1;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:9px 4px 11px;
+  color:var(--muted);
+  font-size:0.8rem;font-weight:600;
+  text-decoration:none;
+  background:none;border:none;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:color .2s;
+  white-space:nowrap;
+}
+.tab:hover{color:var(--body)}
+.tab.active{color:var(--g9)}
+.tab-icon{font-size:1.15rem;transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.tab.active .tab-icon{transform:translateY(-1px) scale(1.12)}
+.tab-label{font-size:0.62rem;letter-spacing:.2px}
+.tab-pts{
+  font-family:var(--fm);font-size:0.52rem;
+  color:var(--muted);
+}
+.tab.active .tab-pts{color:var(--sky2)}
+.tab-ink{
+  position:absolute;bottom:0;height:2px;
+  border-radius:2px 2px 0 0;
+  transition:left .35s cubic-bezier(.4,0,.2,1),width .35s cubic-bezier(.4,0,.2,1),background .3s;
+  pointer-events:none;
+}
+
+/* ═══════════════════════════════════════════
+   SLIDE TRACK
+═══════════════════════════════════════════ */
+.viewport{
+  flex:1;
+  position:relative;
+  overflow:hidden;
+  min-height:0;
+}
+.track{
+  display:flex;
+  height:100%;
+  width:400%;
+  transition:transform .45s cubic-bezier(.4,0,.2,1);
+  will-change:transform;
+  touch-action:pan-y;
+}
+.section{
+  width:25%;
+  height:100%;
+  flex-shrink:0;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:var(--g2) transparent;
+  display:flex;flex-direction:column;
+  align-items:center;
+  padding:28px 20px 50px;
+  touch-action:pan-y;
+}
+.section::-webkit-scrollbar{width:4px}
+.section::-webkit-scrollbar-thumb{background:var(--g2);border-radius:4px}
+.s1{background:radial-gradient(ellipse 90% 55% at 50% 0%,#0c2548 0%,var(--ink) 70%)}
+.s2{background:radial-gradient(ellipse 90% 55% at 50% 0%,#0c1e3d 0%,var(--ink) 70%)}
+.s3{background:radial-gradient(ellipse 90% 55% at 50% 0%,#071f16 0%,var(--ink) 70%)}
+.s4{background:radial-gradient(ellipse 90% 55% at 50% 0%,#1a0e30 0%,var(--ink) 70%)}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--fm);font-size:0.6rem;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--sub);margin-bottom:10px;
+}
+.eyebrow::before,.eyebrow::after{
+  content:'';display:block;height:1px;width:24px;background:var(--g2);
+}
+.section-title{
+  font-family:var(--fd);font-size:1.7rem;font-weight:900;
+  color:var(--g9);line-height:1.15;letter-spacing:-0.5px;
+  text-align:center;margin-bottom:5px;
+}
+.section-desc{font-size:0.78rem;color:var(--sub);text-align:center;margin-bottom:26px}
+.section-head{flex-shrink:0;width:100%}
+
+/* ═══════════════════════════════════════════
+   GLASS CARD
+═══════════════════════════════════════════ */
+.glass{
+  background:linear-gradient(145deg,rgba(255,255,255,0.065) 0%,rgba(255,255,255,0.02) 100%);
+  border:1px solid var(--g2);
+  border-radius:var(--r20);
+  box-shadow:0 12px 48px rgba(0,0,0,0.35),inset 0 1px 0 rgba(255,255,255,0.07);
+  position:relative;overflow:hidden;
+  width:100%;max-width:640px;
+  padding:30px 32px;
+  flex-shrink:0;
+}
+.glass-bar{
+  position:absolute;top:0;left:0;right:0;
+  height:2px;border-radius:2px 2px 0 0;
+}
+.glass-glow{
+  position:absolute;top:-80px;right:-80px;
+  width:240px;height:240px;border-radius:50%;
+  opacity:0.05;pointer-events:none;
+}
+
+/* ═══════════════════════════════════════════
+   ACTIVITY 1 — ABOUT ME
+═══════════════════════════════════════════ */
+.a1-name{
+  font-family:var(--fd);font-size:2.2rem;font-weight:900;
+  color:var(--g9);letter-spacing:-1.2px;line-height:1;
+  margin-bottom:5px;
+}
+.a1-role{
+  font-family:var(--fm);font-size:0.62rem;letter-spacing:2.2px;
+  text-transform:uppercase;color:var(--sky2);margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;
+}
+.a1-role::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,rgba(96,165,250,0.35),transparent);
+}
+.micro{
+  font-family:var(--fm);font-size:0.56rem;letter-spacing:2.2px;
+  text-transform:uppercase;color:var(--muted);margin-bottom:7px;
+}
+.a1-para{font-size:0.87rem;color:var(--body);line-height:1.7;margin-bottom:0}
+.a1-para strong{color:var(--g9);font-weight:700}
+.divider-line{border:none;border-top:1px solid var(--g2);margin:20px 0}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.info-box{
+  background:var(--g1);border:1px solid var(--g2);
+  border-radius:var(--r12);padding:16px;
+  transition:border-color .2s,background .2s;
+}
+.info-box:hover{border-color:var(--g3);background:var(--g2)}
+.info-icon{font-size:1.25rem;display:block;margin-bottom:6px}
+.info-box p{font-size:0.78rem;color:var(--body);line-height:1.5}
+
+/* ═══════════════════════════════════════════
+   ACTIVITY 2 — SEMANTIC
+═══════════════════════════════════════════ */
+.sem-page{
+  width:100%;max-width:660px;
+  border-radius:var(--r16);overflow:hidden;
+  border:1px solid var(--g2);
+  box-shadow:0 24px 64px rgba(0,0,0,0.5);
+  flex-shrink:0;
+}
+.sem-header{
+  background:linear-gradient(135deg,#0d2850 0%,#0a1e3a 100%);
+  padding:30px 36px;position:relative;overflow:hidden;
+}
+.sem-header::after{
+  content:'</>';position:absolute;right:24px;top:50%;
+  transform:translateY(-50%);
+  font-family:var(--fm);font-size:2.2rem;
+  color:rgba(59,130,246,0.1);font-weight:700;
+}
+.sem-header h1{font-family:var(--fd);font-size:1.7rem;font-weight:700;margin-bottom:4px}
+.sem-header p{font-family:var(--fm);font-size:0.64rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+.sem-nav{
+  background:#0c2044;padding:0 36px;
+  display:flex;border-bottom:1px solid var(--g2);
+}
+.sem-nav a{
+  display:inline-block;padding:11px 16px;
+  color:var(--sub);text-decoration:none;
+  font-size:0.8rem;font-weight:600;
+  border-bottom:2px solid transparent;
+  transition:color .2s,border-color .2s;
+}
+.sem-nav a:first-child{color:var(--sky2);border-bottom-color:var(--sky2)}
+.sem-nav a:hover{color:var(--g9);border-bottom-color:var(--sky2)}
+.sem-main{
+  background:var(--ink2);padding:24px 36px;
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+}
+.sem-card{
+  background:var(--g1);border:1px solid var(--g2);
+  border-radius:var(--r8);padding:20px;
+}
+.sem-type{
+  font-family:var(--fm);font-size:0.56rem;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--sky2);margin-bottom:7px;
+}
+.sem-type::before{content:'<';opacity:.5}
+.sem-type::after{content:'>';opacity:.5}
+.sem-card h3{font-size:0.9rem;font-weight:700;color:var(--g9);margin-bottom:6px}
+.sem-card p{font-size:0.78rem;color:var(--sub);line-height:1.65}
+.sem-footer{
+  background:var(--ink);padding:13px 36px;
+  border-top:1px solid var(--g1);text-align:center;
+}
+.sem-footer p{font-family:var(--fm);font-size:0.66rem;color:var(--muted);letter-spacing:0.5px}
+.tag-shelf{
+  display:flex;flex-wrap:wrap;gap:8px;
+  justify-content:center;margin-top:20px;
+  max-width:660px;width:100%;
+  flex-shrink:0;
+}
+.tag{
+  font-family:var(--fm);font-size:0.6rem;letter-spacing:0.5px;
+  padding:5px 12px;border-radius:20px;border:1px solid;
+  transition:transform .15s,opacity .15s;cursor:default;
+}
+.tag:hover{transform:translateY(-2px);opacity:.8}
+.tb{background:rgba(59,130,246,0.1);color:var(--sky2);border-color:rgba(59,130,246,0.25)}
+.tt{background:rgba(13,148,136,0.1);color:var(--mint);border-color:rgba(13,148,136,0.25)}
+.tv{background:rgba(124,58,237,0.1);color:#a78bfa;border-color:rgba(124,58,237,0.25)}
+
+/* ═══════════════════════════════════════════
+   ACTIVITY 3 — GALLERY
+═══════════════════════════════════════════ */
+.gal-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:20px;width:100%;max-width:820px;
+  flex-shrink:0;
+}
+.gal-card{
+  border-radius:var(--r16);overflow:hidden;
+  border:1px solid var(--g2);background:var(--ink3);
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;
+  cursor:pointer;
+}
+.gal-card:hover{
+  transform:translateY(-10px) scale(1.02);
+  box-shadow:0 28px 60px rgba(0,0,0,0.55);
+}
+.gal-img{
+  aspect-ratio:1/1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:9px;
+  position:relative;overflow:hidden;
+}
+.gal-img::after{
+  content:'';position:absolute;inset:0;opacity:0;
+  transition:opacity .3s;
+}
+.gal-card:hover .gal-img::after{opacity:1}
+.gi1{background:linear-gradient(155deg,#0e2e60,#091c3e);color:#60a5fa}
+.gi1::after{background:linear-gradient(155deg,rgba(59,130,246,0.18),transparent)}
+.gi2{background:linear-gradient(155deg,#0a3020,#06180d);color:#34d399}
+.gi2::after{background:linear-gradient(155deg,rgba(52,211,153,0.18),transparent)}
+.gi3{background:linear-gradient(155deg,#2c0c38,#190620);color:#e879f9}
+.gi3::after{background:linear-gradient(155deg,rgba(232,121,249,0.18),transparent)}
+.gal-emoji{font-size:3.2rem;position:relative;z-index:1}
+.gal-lbl{
+  font-family:var(--fm);font-size:0.58rem;font-weight:700;
+  letter-spacing:2.5px;text-transform:uppercase;
+  position:relative;z-index:1;opacity:.7;
+}
+.gal-body{padding:18px 18px 20px}
+.gal-body strong{display:block;font-size:0.88rem;font-weight:700;color:var(--g9);margin-bottom:5px}
+.gal-body p{font-size:0.77rem;color:var(--sub);line-height:1.6;margin-bottom:10px}
+.alt-tag{
+  display:inline-flex;align-items:center;gap:4px;
+  font-family:var(--fm);font-size:0.58rem;
+  padding:3px 9px;border-radius:5px;border:1px solid;
+  background:rgba(52,211,153,0.07);color:var(--mint);
+  border-color:rgba(52,211,153,0.22);
+}
+.alt-tag::before{content:'✓';font-size:0.55rem}
+
+/* ═══════════════════════════════════════════
+   ACTIVITY 4 — FORM
+═══════════════════════════════════════════ */
+.form-wrap{width:100%;max-width:460px}
+.form-title{
+  font-family:var(--fd);font-size:1.9rem;font-weight:900;
+  color:var(--g9);line-height:1.1;margin-bottom:4px;letter-spacing:-0.5px;
+}
+.form-sub{font-size:0.82rem;color:var(--sub);margin-bottom:32px}
+.ff{margin-bottom:20px}
+.ff label{
+  display:flex;align-items:center;gap:5px;
+  font-size:0.75rem;font-weight:700;color:var(--body);
+  margin-bottom:7px;letter-spacing:.2px;
+}
+.req{color:var(--rose)}
+.ff input{
+  width:100%;padding:12px 16px;
+  background:var(--g1);border:1.5px solid var(--g2);
+  border-radius:var(--r8);font-family:var(--fh);
+  font-size:0.9rem;color:var(--g9);outline:none;
+  transition:border-color .2s,background .2s,box-shadow .2s;
+  caret-color:var(--sky2);
+}
+.ff input::placeholder{color:var(--muted);font-size:0.85rem}
+.ff input:focus{
+  border-color:var(--sky2);
+  background:rgba(59,130,246,0.06);
+  box-shadow:0 0 0 4px rgba(59,130,246,0.12);
+}
+.ff input:valid:not(:placeholder-shown){border-color:rgba(52,211,153,0.45)}
+.ff input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(.5);cursor:pointer}
+.pw-wrap{position:relative}
+.pw-wrap input{padding-right:46px}
+.pw-btn{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:var(--muted);cursor:pointer;
+  font-size:1rem;padding:0;transition:color .2s;
+}
+.pw-btn:hover{color:var(--body)}
+.form-divider{
+  display:flex;align-items:center;gap:12px;
+  margin:24px 0 20px;
+}
+.form-divider::before,.form-divider::after{
+  content:'';flex:1;height:1px;background:var(--g2);
+}
+.form-divider span{
+  font-family:var(--fm);font-size:0.58rem;
+  color:var(--muted);letter-spacing:1px;
+  text-transform:uppercase;white-space:nowrap;
+}
+.btn-reg{
+  width:100%;padding:14px;
+  background:linear-gradient(135deg,var(--violet) 0%,var(--rose) 100%);
+  color:#fff;border:none;border-radius:var(--r8);
+  font-family:var(--fh);font-size:0.92rem;font-weight:800;
+  letter-spacing:.3px;cursor:pointer;
+  box-shadow:0 4px 28px rgba(124,58,237,0.4);
+  transition:opacity .2s,transform .15s,box-shadow .2s;
+  position:relative;overflow:hidden;
+}
+.btn-reg::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.12),transparent);
+  pointer-events:none;
+}
+.btn-reg:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 36px rgba(124,58,237,0.5);
+}
+.btn-reg:active{transform:translateY(0)}
+.success-msg{
+  display:none;
+  margin-top:16px;
+  background:rgba(52,211,153,0.08);
+  border:1px solid rgba(52,211,153,0.25);
+  border-radius:var(--r8);padding:12px 16px;
+  font-size:0.85rem;color:var(--mint);
+  font-weight:600;text-align:center;
+}
+
+/* ═══════════════════════════════════════════
+   DOTS
+═══════════════════════════════════════════ */
+.dots{
+  position:absolute;
+  bottom:10px;left:50%;
+  transform:translateX(-50%);
+  display:flex;gap:7px;
+  z-index:10;
+}
+.dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--g3);
+  transition:background .3s,width .3s;
+  cursor:pointer;
+}
+.dot.active{width:22px;border-radius:4px;background:var(--sky2)}
+
+/* ═══════════════════════════════════════════
+   ARROW NAV
+═══════════════════════════════════════════ */
+.arrow-nav{
+  position:absolute;top:50%;
+  transform:translateY(-50%);
+  z-index:10;
+}
+.arrow-btn{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,0.08);
+  border:1px solid var(--g2);
+  color:var(--body);font-size:1rem;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,color .2s,transform .15s;
+}
+.arrow-btn:hover{background:var(--g3);color:var(--g9);transform:scale(1.08)}
+.arrow-btn:disabled{opacity:.2;pointer-events:none}
+.arrow-left{left:8px}
+.arrow-right{right:8px}
+@media(max-width:680px){.arrow-nav{display:none}}
+
+/* ═══════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════ */
+.toast{
+  position:fixed;bottom:18px;left:50%;
+  transform:translateX(-50%) translateY(12px);
+  background:linear-gradient(135deg,#0e2040,#09162a);
+  border:1px solid rgba(59,130,246,0.3);
+  color:var(--g9);font-size:0.82rem;font-weight:600;
+  padding:12px 24px;border-radius:30px;
+  box-shadow:0 8px 40px rgba(0,0,0,0.5);
+  z-index:999;white-space:nowrap;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s,transform .3s;
+  max-width:90vw;
+  overflow:hidden;text-overflow:ellipsis;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:680px){
+  .topbar{padding:0 14px;height:50px}
+  .avatar{width:30px;height:30px;font-size:0.65rem}
+  .brand-name{font-size:0.8rem}
+  .pts-pill{font-size:0.62rem;padding:4px 11px}
+  .tab{padding:8px 2px 9px}
+  .tab-icon{font-size:1.05rem}
+  .tab-label{font-size:0.58rem}
+  .section{padding:16px 14px 36px}
+  .section-title{font-size:1.32rem}
+  .section-desc{font-size:0.72rem;margin-bottom:14px}
+  .eyebrow{font-size:0.54rem;margin-bottom:7px}
+  .glass{padding:18px 16px}
+  .a1-name{font-size:1.65rem;margin-bottom:3px}
+  .a1-role{font-size:0.54rem;margin-bottom:13px}
+  .micro{font-size:0.52rem;margin-bottom:5px}
+  .a1-para{font-size:0.79rem;line-height:1.55}
+  .divider-line{margin:14px 0}
+  .info-grid{grid-template-columns:1fr;gap:8px}
+  .info-box{padding:12px 14px}
+  .info-icon{font-size:1.1rem;margin-bottom:4px}
+  .info-box p{font-size:0.74rem;line-height:1.4}
+  .sem-main{grid-template-columns:1fr;gap:10px}
+  .sem-header,.sem-nav,.sem-main,.sem-footer{padding-left:18px;padding-right:18px}
+  .sem-header{padding-top:18px;padding-bottom:16px}
+  .sem-header h1{font-size:1.25rem}
+  .sem-card{padding:14px 16px}
+  .gal-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .gal-emoji{font-size:2.4rem}
+  .gal-body{padding:12px 12px 14px}
+  .gal-body strong{font-size:0.8rem}
+  .gal-body p{font-size:0.7rem}
+  .tag-shelf{margin-top:12px;gap:6px}
+  .tag{font-size:0.55rem;padding:4px 9px}
+  .form-title{font-size:1.55rem}
+  .ff{margin-bottom:14px}
+}
+@media(max-width:400px){
+  .tab-pts{display:none}
+  .a1-name{font-size:1.6rem}
+  .gal-grid{gap:8px}
+  .gal-emoji{font-size:1.8rem}
+  .gal-lbl{font-size:0.5rem}
+  .gal-body{padding:8px 9px 10px}
+  .gal-body strong{font-size:0.72rem;margin-bottom:3px}
+  .gal-body p{font-size:0.62rem;line-height:1.4;margin-bottom:6px}
+  .alt-tag{font-size:0.48rem;padding:2px 6px}
+}
+@media(max-height:680px){
+  .a1-name{font-size:1.5rem;margin-bottom:2px}
+  .a1-role{margin-bottom:10px}
+  .a1-para{font-size:0.76rem;line-height:1.48}
+  .divider-line{margin:11px 0}
+  .info-box{padding:10px 12px}
+  .info-box p{font-size:0.71rem;line-height:1.35}
+  #act1 .section-title,#act2 .section-title,#act3 .section-title{font-size:1.18rem}
+  #act1 .section-desc,#act2 .section-desc,#act3 .section-desc{margin-bottom:10px}
+  #act1 .eyebrow,#act2 .eyebrow,#act3 .eyebrow{margin-bottom:5px}
+  .sem-header{padding-top:14px;padding-bottom:12px}
+  .sem-header h1{font-size:1.1rem}
+  .sem-header p{font-size:0.58rem}
+  .sem-nav a{padding:8px 12px;font-size:0.74rem}
+  .sem-main{padding-top:14px;padding-bottom:14px;gap:8px}
+  .sem-card{padding:10px 13px}
+  .sem-card h3{font-size:0.86rem;margin-bottom:4px}
+  .sem-card p{font-size:0.72rem;line-height:1.45}
+  .sem-footer{padding-top:9px;padding-bottom:9px}
+}
+</style>
+</head>
+<body>
+  <noscript>
+    <div style="padding:40px;text-align:center;font-family:sans-serif;color:#fff;background:#09111f;min-height:100vh">
+      Please enable JavaScript to view this portfolio.
+    </div>
+  </noscript>
+
+<!-- ════════ TOPBAR ════════ -->
+<div class="topbar">
+  <div class="brand">
+    <div class="avatar">GL</div>
+    <div>
+      <div class="brand-name">Gimbert Ludovice</div>
+      <div class="brand-sub">BSIT · 1st Year · 2026</div>
+    </div>
+  </div>
+  <div class="pts-pill">Total: <strong>90 pts</strong></div>
+</div>
+
+<!-- ════════ TABS ════════ -->
+<nav class="nav-wrap" id="navTabs">
+  <button class="tab active" onclick="goTo(0)">
+    <span class="tab-icon">👤</span>
+    <span class="tab-label">About Me</span>
+    <span class="tab-pts">Act.1 · 20pts</span>
+  </button>
+  <button class="tab" onclick="goTo(1)">
+    <span class="tab-icon">🏷️</span>
+    <span class="tab-label">Semantic</span>
+    <span class="tab-pts">Act.2 · 20pts</span>
+  </button>
+  <button class="tab" onclick="goTo(2)">
+    <span class="tab-icon">🖼️</span>
+    <span class="tab-label">Gallery</span>
+    <span class="tab-pts">Act.3 · 30pts</span>
+  </button>
+  <button class="tab" onclick="goTo(3)">
+    <span class="tab-icon">📝</span>
+    <span class="tab-label">Register</span>
+    <span class="tab-pts">Act.4 · 20pts</span>
+  </button>
+  <div class="tab-ink" id="tabInk"></div>
+</nav>
+
+<!-- ════════ VIEWPORT / SLIDE TRACK ════════ -->
+<div class="viewport">
+  <div class="track" id="track">
+
+    <!-- ══════════ SLIDE 1 — ABOUT ME ══════════ -->
+    <section class="section s1" id="act1">
+      <div class="section-head">
+        <div class="eyebrow">Activity 1 &nbsp;·&nbsp; 20 Points</div>
+        <h2 class="section-title">Personal Introduction</h2>
+        <p class="section-desc">Simple HTML5 webpage introducing myself</p>
+      </div>
+
+      <div class="glass">
+        <div class="glass-bar" style="background:linear-gradient(90deg,var(--sky),var(--teal))"></div>
+        <div class="glass-glow" style="background:var(--sky)"></div>
+
+        <h1 class="a1-name">Gimbert Ludovice</h1>
+        <p class="a1-role">BS Information Technology · 1st Year</p>
+
+        <p class="micro">About Me</p>
+        <p class="a1-para">
+          Hi! My name is <strong>Gimbert Ludovice</strong> and I am a current first-year college
+          student with a passion for technology, website building, and problem-solving. I enjoy
+          learning new things every day and I believe that education is the key to achieving my
+          dreams. I am hardworking, curious, and always ready to take on new challenges.
+        </p>
+
+        <hr class="divider-line"/>
+
+        <div class="info-grid">
+          <div class="info-box">
+            <span class="info-icon">🎓</span>
+            <p class="micro">Course / Program</p>
+            <p>Bachelor of Science in Information Technology — Specialized in Mobile and Website Development</p>
+          </div>
+          <div class="info-box">
+            <span class="info-icon">🎮</span>
+            <p class="micro">Favorite Hobby</p>
+            <p>Playing chess, coding in Java, HTML5 &amp; CSS3, and solving logic puzzles</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ SLIDE 2 — SEMANTIC ══════════ -->
+    <section class="section s2" id="act2">
+      <div class="section-head">
+        <div class="eyebrow">Activity 2 &nbsp;·&nbsp; 20 Points</div>
+        <h2 class="section-title">Semantic HTML5 Page</h2>
+        <p class="section-desc">Built with proper semantic structure</p>
+      </div>
+
+      <div class="sem-page">
+        <header class="sem-header">
+          <h1>Gimbert Ludovice</h1>
+          <p>BS Information Technology — 1st Year Level</p>
+        </header>
+
+        <nav class="sem-nav" aria-label="Main Navigation">
+          <a href="#" onclick="goTo(0);return false;" title="About Me">About Me</a>
+          <a href="#" onclick="goTo(2);return false;" title="Gallery">Gallery</a>
+          <a href="#" onclick="goTo(3);return false;" title="Register">Register</a>
+        </nav>
+
+        <main class="sem-main">
+          <section class="sem-card">
+            <div class="sem-type">section</div>
+            <h3>Profile</h3>
+            <p>I am a first-year BSIT student focused on mobile and web development.
+               Passionate about building clean, accessible, and functional websites using modern web technologies.</p>
+          </section>
+          <article class="sem-card">
+            <div class="sem-type">article</div>
+            <h3>Goals</h3>
+            <p>My goal is to become a full-stack developer. Currently learning HTML5, CSS3, and JavaScript —
+               planning to explore React and Vue in my later college years.</p>
+          </article>
+        </main>
+
+        <footer class="sem-footer">
+          <p><center>Bachelor of Science in Information Technology &mdash; 1st Year Level</center></p>
+        </footer>
+      </div>
+
+      <div class="tag-shelf">
+        <span class="tag tb">&lt;header&gt;</span>
+        <span class="tag tb">&lt;nav&gt;</span>
+        <span class="tag tb">&lt;main&gt;</span>
+        <span class="tag tb">&lt;section&gt;</span>
+        <span class="tag tb">&lt;article&gt;</span>
+        <span class="tag tb">&lt;footer&gt;</span>
+        <span class="tag tt">&lt;center&gt;</span>
+        <span class="tag tv">aria-label</span>
+        <span class="tag tv">href</span>
+        <span class="tag tv">title</span>
+      </div>
+    </section>
+
+    <!-- ══════════ SLIDE 3 — GALLERY ══════════ -->
+    <section class="section s3" id="act3">
+      <div class="section-head">
+        <div class="eyebrow">Activity 3 &nbsp;·&nbsp; 30 Points</div>
+        <h2 class="section-title">Technology Gallery</h2>
+        <p class="section-desc">Three images with alt text &amp; captions</p>
+      </div>
+
+      <div class="gal-grid">
+        <figure class="gal-card">
+          <div class="gal-img gi1"
+            role="img"
+            aria-label="Web Development — HTML, CSS, and JavaScript source code displayed on a laptop screen">
+            <span class="gal-emoji">💻</span>
+            <span class="gal-lbl">Web Dev</span>
+          </div>
+          <figcaption class="gal-body">
+            <strong>Web Development</strong>
+            <p>Writing HTML, CSS, and JavaScript to build interactive web applications for everyday users.</p>
+            <span class="alt-tag">alt: "Code on laptop screen"</span>
+          </figcaption>
+        </figure>
+
+        <figure class="gal-card">
+          <div class="gal-img gi2"
+            role="img"
+            aria-label="Artificial Intelligence — neural network visualization with interconnected nodes and data flow">
+            <span class="gal-emoji">🤖</span>
+            <span class="gal-lbl">AI / ML</span>
+          </div>
+          <figcaption class="gal-body">
+            <strong>Artificial Intelligence</strong>
+            <p>Neural networks and machine learning algorithms powering intelligent systems of the future.</p>
+            <span class="alt-tag">alt: "Neural network nodes"</span>
+          </figcaption>
+        </figure>
+
+        <figure class="gal-card">
+          <div class="gal-img gi3"
+            role="img"
+            aria-label="Mobile Development — smartphone displaying a mobile application user interface">
+            <span class="gal-emoji">📱</span>
+            <span class="gal-lbl">Mobile Dev</span>
+          </div>
+          <figcaption class="gal-body">
+            <strong>Mobile Development</strong>
+            <p>Designing and building Android and iOS apps for mobile users around the world.</p>
+            <span class="alt-tag">alt: "Smartphone app screen"</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ══════════ SLIDE 4 — REGISTER ══════════ -->
+    <section class="section s4" id="act4">
+      <div class="section-head">
+        <div class="eyebrow">Activity 4 &nbsp;·&nbsp; 20 Points</div>
+        <h2 class="section-title">Student Registration</h2>
+        <p class="section-desc">HTML5 form with styling &amp; validation</p>
+      </div>
+
+      <div class="glass" style="max-width:460px">
+        <div class="glass-bar" style="background:linear-gradient(90deg,var(--violet),var(--rose))"></div>
+        <div class="glass-glow" style="background:var(--violet)"></div>
+
+        <p class="form-title">Create Account</p>
+        <p class="form-sub">Fill in your details to register as a student.</p>
+
+        <div class="ff">
+          <label for="fn">👤 Full Name <span class="req">*</span></label>
+          <input type="text" id="fn" name="fullname"
+            placeholder="e.g. Gimbert Ludovice"
+            required autocomplete="name"
+            title="Enter your full name"/>
+        </div>
+
+        <div class="ff">
+          <label for="em">📧 Email Address <span class="req">*</span></label>
+          <input type="email" id="em" name="email"
+            placeholder="e.g. gimbert@email.com"
+            required autocomplete="email"
+            title="Enter a valid email address"/>
+        </div>
+
+        <div class="ff">
+          <label for="db">🗓️ Date of Birth <span class="req">*</span></label>
+          <input type="date" id="db" name="dob"
+            required max="2010-12-31"
+            title="Select your date of birth"/>
+        </div>
+
+        <div class="ff">
+          <label for="pw">🔑 Password <span class="req">*</span></label>
+          <div class="pw-wrap">
+            <input type="password" id="pw" name="password"
+              placeholder="Minimum 8 characters"
+              required minlength="8"
+              autocomplete="new-password"
+              title="At least 8 characters"/>
+            <button type="button" class="pw-btn" id="pwBtn" onclick="togglePw()" title="Show/hide password">👁️</button>
+          </div>
+        </div>
+
+        <div class="form-divider"><span>ready to join?</span></div>
+
+        <button type="button" class="btn-reg" onclick="doRegister()">
+          🚀 &nbsp; Register Now
+        </button>
+
+        <div class="success-msg" id="successMsg">✅ Registration submitted successfully!</div>
+      </div>
+    </section>
+
+  </div><!-- /track -->
+
+  <!-- Arrow buttons -->
+  <div class="arrow-nav arrow-left">
+    <button class="arrow-btn" id="arrowLeft" onclick="goTo(current-1)" disabled>‹</button>
+  </div>
+  <div class="arrow-nav arrow-right">
+    <button class="arrow-btn" id="arrowRight" onclick="goTo(current+1)">›</button>
+  </div>
+
+  <!-- Dots -->
+  <div class="dots" id="dots">
+    <div class="dot active" onclick="goTo(0)"></div>
+    <div class="dot" onclick="goTo(1)"></div>
+    <div class="dot" onclick="goTo(2)"></div>
+    <div class="dot" onclick="goTo(3)"></div>
+  </div>
+</div><!-- /viewport -->
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ════ STATE ════ */
+let current = 0;
+const TOTAL  = 4;
+const COLORS = ['#3b82f6','#0d9488','#34d399','#7c3aed'];
+
+const track   = document.getElementById('track');
+const tabBar  = document.getElementById('navTabs');
+const tabInk  = document.getElementById('tabInk');
+const tabs    = document.querySelectorAll('.tab');
+const dots    = document.querySelectorAll('.dot');
+const arrowL  = document.getElementById('arrowLeft');
+const arrowR  = document.getElementById('arrowRight');
+const sections = document.querySelectorAll('.section');
+
+/* ════ TAB INK INDICATOR ════ */
+function moveInk(idx){
+  const btn = tabs[idx];
+  const bar = tabBar.getBoundingClientRect();
+  const br  = btn.getBoundingClientRect();
+  tabInk.style.left       = (br.left - bar.left) + 'px';
+  tabInk.style.width      = br.width + 'px';
+  tabInk.style.background = COLORS[idx];
+}
+
+/* ════ NAVIGATE ════ */
+function goTo(idx){
+  if(idx < 0 || idx >= TOTAL) return;
+  current = idx;
+
+  track.style.transform = 'translateX(-' + (idx * 25) + '%)';
+  tabs.forEach((t,i)=>t.classList.toggle('active', i===idx));
+  dots.forEach((d,i)=>d.classList.toggle('active', i===idx));
+  moveInk(idx);
+
+  arrowL.disabled = idx === 0;
+  arrowR.disabled = idx === TOTAL - 1;
+
+  sections[idx].scrollTop = 0;
+}
+
+/* ════ INIT ════ */
+window.addEventListener('load', ()=>moveInk(0));
+window.addEventListener('resize', ()=>moveInk(current));
+
+/* ════ SWIPE ════ */
+let tx = 0, ty = 0, swipeBlocked = false;
+track.addEventListener('touchstart', e=>{
+  tx = e.touches[0].clientX;
+  ty = e.touches[0].clientY;
+  swipeBlocked = !!e.target.closest('#act4');
+}, {passive:true});
+
+track.addEventListener('touchend', e=>{
+  if(swipeBlocked) return;
+  const dx = e.changedTouches[0].clientX - tx;
+  const dy = e.changedTouches[0].clientY - ty;
+  if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 48){
+    goTo(dx < 0 ? current + 1 : current - 1);
+  }
+}, {passive:true});
+
+/* ════ KEYBOARD ════ */
+document.addEventListener('keydown', e=>{
+  if(e.key === 'ArrowRight') goTo(current + 1);
+  if(e.key === 'ArrowLeft')  goTo(current - 1);
+});
+
+/* ════ PASSWORD TOGGLE ════ */
+function togglePw(){
+  const inp = document.getElementById('pw');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+
+/* ════ REGISTER ════ */
+function doRegister(){
+  const fn = document.getElementById('fn').value.trim();
+  const em = document.getElementById('em').value.trim();
+  const db = document.getElementById('db').value;
+  const pw = document.getElementById('pw').value;
+
+  if(!fn || !em || !db || pw.length < 8){
+    shakeCard(); return;
+  }
+  document.getElementById('successMsg').style.display = 'block';
+  showToast('✅  Registration submitted successfully!');
+
+  setTimeout(()=>{
+    ['fn','em','db','pw'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('successMsg').style.display = 'none';
+  }, 3600);
+}
+
+function shakeCard(){
+  const card = document.querySelector('#act4 .glass');
+  const kf = [{transform:'translateX(-9px)'},{transform:'translateX(9px)'},
+              {transform:'translateX(-6px)'},{transform:'translateX(6px)'},
+              {transform:'translateX(0)'}];
+  card.animate(kf, {duration:280, easing:'ease-out'});
+  showToast('⚠️  Please fill in all fields correctly.');
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3400);
+}
+</script>
+</body>
+</html>
