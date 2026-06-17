@@ -1,4 +1,4 @@
-# 👤 Gimbert Ludovice — Interactive BSIT Portfolio
+👤 Gimbert Ludovice — Interactive BSIT Portfolio
 Welcome to my 4-in-1 web portfolio! I am Gimbert Ludovice, a first-year student pursuing a BS in Information Technology Specialized in Mobile and Website Development. This project is a compilation of our academic activities built using modern HTML5, CSS3, and JavaScript.
 
 Total Score: 90 pts 🚀
@@ -29,6 +29,4 @@ JavaScript (ES6+) - For sliding viewports, tab switching, password toggle, and f
 Clone this repository:
 
 Bash
-git clone [https://github.com/your-username/gimbert-it-portfolio.git]
-
-(https://gimbertludovice-sketch.github.io/gimbert-it-portfolio/)
+git clone https://github.com/your-username/gimbert-it-portfolio.git
