@@ -1,38 +1,34 @@
 # 👤 Gimbert Ludovice — Interactive BSIT Portfolio
+Welcome to my 4-in-1 web portfolio! I am Gimbert Ludovice, a first-year student pursuing a BS in Information Technology Specialized in Mobile and Website Development. This project is a compilation of our academic activities built using modern HTML5, CSS3, and JavaScript.
 
-Maligayang pagdating sa aking 4-in-1 web portfolio! Ako si **Gimbert Ludovice**, isang unang taong mag-aaral ng **BS Information Technology**. Ang proyektong ito ay isang pagsasama-sama ng aming mga akademikong aktibidad na binuo gamit ang modernong HTML5, CSS3, at JavaScript.
+Total Score: 90 pts 🚀
 
-Total Score: **90 pts** 🚀
+🗂️ Activity Contents
+This portfolio is built as a Single Page Application (SPA) featuring sliding transitions and tab navigation for a smooth user experience:
 
----
+1. 👤 Activity 1: Personal Introduction (20 Points)
+A modern "Glassmorphism" card introducing myself, my course (Specialized in Mobile and Website Development), and my hobbies such as chess and coding.
 
-## 🗂️ Mga Nilalaman ng Aktibidad
+2. 🏷️ Activity 2: Semantic HTML5 Page (20 Points)
+A page designed using proper semantic tags (<header>, <nav>, <main>, <section>, <article>, <footer>) to ensure accessibility and correct SEO structure.
 
-Ang portfolio na ito ay binuo bilang isang **Single Page Application (SPA)** na may sliding transition at tab navigation para sa swabeng user experience:
+3. 🖼️ Activity 3: Technology Gallery (30 Points)
+A responsive gallery showcasing three major fields in technology: Web Dev, AI/ML, and Mobile Dev—complete with ARIA labels, alt text, and figcaptions.
 
-### 1. 👤 Activity 1: Personal Introduction (20 Points)
-* Isang modernong "Glassmorphism" card na nagpapakilala sa aking sarili, sa aking kurso (Specialized in Mobile and Website Development), at aking mga libangan tulad ng chess at coding.
+4. 📝 Activity 4: Student Registration Form (20 Points)
+A student registration form with built-in HTML5 validation (Full Name, Email, Date of Birth, and a Password with a minimum length of 8 characters) featuring an interactive shake animation on input error.
 
-### 2. 🏷️ Activity 2: Semantic HTML5 Page (20 Points)
-* Isang pahina na nakadisenyo gamit ang tamang semantic tags (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer|>`) upang masiguro ang accessibility at tamang SEO structure.
+🛠️ Technologies Used
+HTML5 - For structure and semantic elements.
 
-### 3. 🖼️ Activity 3: Technology Gallery (30 Points)
-* Isang tumutugon (responsive) na gallery na nagpapakita ng tatlong pangunahing larangan sa teknolohiya: Web Dev, AI/ML, at Mobile Dev—kumpleto sa ARIA labels, alt text, at figcaptions.
+CSS3 - For beautiful layout, transitions, animations, and custom properties (CSS variables).
 
-### 4. 📝 Activity 4: Student Registration Form (20 Points)
-* Isang form para sa pagpaparehistro ng mag-aaral na may built-in HTML5 validation (Full Name, Email, Date of Birth, at Password na may habang hindi bababa sa 8 characters) at may interactive shake animation kapag may mali sa input.
+JavaScript (ES6+) - For sliding viewports, tab switching, password toggle, and form handling.
 
----
+🚀 How to Run the Project
+Clone this repository:
 
-## 🛠️ Mga Teknolohiyang Ginamit
-* **HTML5** - Para sa istraktura at semantic elements.
-* **CSS3** - Para sa magandang layout, transitions, animations, at custom properties (CSS variables).
-* **JavaScript (ES6+)** - Para sa sliding viewports, tab switching, password toggle, at form handling.
+Bash
+git clone [https://github.com/your-username/gimbert-it-portfolio.git]
 
----
-
-## 🚀 Paano Patakbuhin ang Proyekto
-
-1. I-clone ang repository na ito:
-   ```bash
-   git clone [https://github.com/iyong-username/gimbert-it-portfolio.git](https://github.com/iyong-username/gimbert-it-portfolio.git)
+(https://gimbertludovice-sketch.github.io/gimbert-it-portfolio/)
