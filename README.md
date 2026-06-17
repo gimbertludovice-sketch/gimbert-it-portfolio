@@ -10,7 +10,7 @@ This portfolio is built as a Single Page Application (SPA) featuring sliding tra
 A modern "Glassmorphism" card introducing myself, my course (Specialized in Mobile and Website Development), and my hobbies such as chess and coding.
 
 2. 🏷️ Activity 2: Semantic HTML5 Page (20 Points)
-A page designed using proper semantic tags (<header>, <nav>, <main>, <section>, <article>, <footer>) to ensure accessibility and correct SEO structure.
+A page designed using proper semantic tags (header, nav, main, section, article, <footer>) to ensure accessibility and correct SEO structure.
 
 3. 🖼️ Activity 3: Technology Gallery (30 Points)
 A responsive gallery showcasing three major fields in technology: Web Dev, AI/ML, and Mobile Dev—complete with ARIA labels, alt text, and figcaptions.
