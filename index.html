@@ -137,13 +137,13 @@ body{
 .track{
   display:flex;
   height:100%;
-  width:400%;
+  width:600%;
   transition:transform .45s cubic-bezier(.4,0,.2,1);
   will-change:transform;
   touch-action:pan-y;
 }
 .section{
-  width:25%;
+  width:16.6667%;
   height:100%;
   flex-shrink:0;
   overflow-y:scroll;
@@ -158,10 +158,12 @@ body{
 }
 .section::-webkit-scrollbar{width:4px}
 .section::-webkit-scrollbar-thumb{background:var(--g2);border-radius:4px}
+.s0{background:radial-gradient(ellipse 90% 55% at 50% 0%,#2b1d05 0%,var(--ink) 70%)}
 .s1{background:radial-gradient(ellipse 90% 55% at 50% 0%,#0c2548 0%,var(--ink) 70%)}
 .s2{background:radial-gradient(ellipse 90% 55% at 50% 0%,#0c1e3d 0%,var(--ink) 70%)}
 .s3{background:radial-gradient(ellipse 90% 55% at 50% 0%,#071f16 0%,var(--ink) 70%)}
 .s4{background:radial-gradient(ellipse 90% 55% at 50% 0%,#1a0e30 0%,var(--ink) 70%)}
+.s5{background:radial-gradient(ellipse 90% 55% at 50% 0%,#2a0a18 0%,var(--ink) 70%)}
 
 .eyebrow{
   display:inline-flex;align-items:center;gap:8px;
@@ -445,6 +447,47 @@ body{
 }
 
 /* ═══════════════════════════════════════════
+   ACTIVITY 0 — INTRO / TITLE SLIDE
+═══════════════════════════════════════════ */
+.intro-profile{display:flex;align-items:center;gap:18px;margin-bottom:6px}
+.intro-avatar{
+  width:64px;height:64px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold),var(--sky));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fd);font-weight:900;font-size:1.3rem;color:#fff;
+  box-shadow:0 0 0 3px rgba(245,158,11,0.25);
+}
+.menu-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:12px;margin-bottom:2px;
+}
+.menu-item{
+  display:flex;flex-direction:column;align-items:flex-start;gap:5px;
+  width:100%;
+  background:var(--g1);border:1px solid var(--g2);
+  border-radius:var(--r12);padding:14px 16px;
+  font-family:var(--fh);text-align:left;cursor:pointer;
+  transition:border-color .2s,background .2s,transform .15s;
+}
+.menu-item:hover{border-color:var(--g3);background:var(--g2);transform:translateY(-2px)}
+.menu-name{font-size:0.82rem;font-weight:700;color:var(--g9)}
+.menu-pts{font-family:var(--fm);font-size:0.62rem;color:var(--sub);letter-spacing:0.5px}
+.swipe-cue{text-align:center;font-size:0.74rem;color:var(--sub);margin-top:18px}
+
+/* ═══════════════════════════════════════════
+   ACTIVITY 5 — CLOSING SLIDE
+═══════════════════════════════════════════ */
+.total-score{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  margin:18px 0 16px;padding:16px;
+  background:rgba(245,158,11,0.06);
+  border:1px solid rgba(245,158,11,0.25);
+  border-radius:var(--r12);
+}
+.total-num{font-family:var(--fd);font-size:2rem;font-weight:900;color:var(--gold)}
+.total-num small{font-family:var(--fh);font-size:0.85rem;font-weight:600;color:var(--sub)}
+
+/* ═══════════════════════════════════════════
    DOTS
 ═══════════════════════════════════════════ */
 .dots{
@@ -543,6 +586,12 @@ body{
   .tag{font-size:0.55rem;padding:4px 9px}
   .form-title{font-size:1.55rem}
   .ff{margin-bottom:14px}
+  .intro-avatar{width:52px;height:52px;font-size:1.05rem}
+  .menu-grid{gap:8px}
+  .menu-item{padding:11px 12px}
+  .menu-name{font-size:0.76rem}
+  .menu-pts{font-size:0.58rem}
+  .total-num{font-size:1.6rem}
 }
 @media(max-width:400px){
   .tab-pts{display:none}
@@ -562,9 +611,9 @@ body{
   .divider-line{margin:11px 0}
   .info-box{padding:10px 12px}
   .info-box p{font-size:0.71rem;line-height:1.35}
-  #act1 .section-title,#act2 .section-title,#act3 .section-title{font-size:1.18rem}
-  #act1 .section-desc,#act2 .section-desc,#act3 .section-desc{margin-bottom:10px}
-  #act1 .eyebrow,#act2 .eyebrow,#act3 .eyebrow{margin-bottom:5px}
+  #act1 .section-title,#act2 .section-title,#act3 .section-title,#act0 .section-title,#act5 .section-title{font-size:1.18rem}
+  #act1 .section-desc,#act2 .section-desc,#act3 .section-desc,#act0 .section-desc,#act5 .section-desc{margin-bottom:10px}
+  #act1 .eyebrow,#act2 .eyebrow,#act3 .eyebrow,#act0 .eyebrow,#act5 .eyebrow{margin-bottom:5px}
   .sem-header{padding-top:14px;padding-bottom:12px}
   .sem-header h1{font-size:1.1rem}
   .sem-header p{font-size:0.58rem}
@@ -599,24 +648,34 @@ body{
 <!-- ════════ TABS ════════ -->
 <nav class="nav-wrap" id="navTabs">
   <button class="tab active" onclick="goTo(0)">
+    <span class="tab-icon">👋</span>
+    <span class="tab-label">Intro</span>
+    <span class="tab-pts">Start Here</span>
+  </button>
+  <button class="tab" onclick="goTo(1)">
     <span class="tab-icon">👤</span>
     <span class="tab-label">About Me</span>
     <span class="tab-pts">Act.1 · 20pts</span>
   </button>
-  <button class="tab" onclick="goTo(1)">
+  <button class="tab" onclick="goTo(2)">
     <span class="tab-icon">🏷️</span>
     <span class="tab-label">Semantic</span>
     <span class="tab-pts">Act.2 · 20pts</span>
   </button>
-  <button class="tab" onclick="goTo(2)">
+  <button class="tab" onclick="goTo(3)">
     <span class="tab-icon">🖼️</span>
     <span class="tab-label">Gallery</span>
     <span class="tab-pts">Act.3 · 30pts</span>
   </button>
-  <button class="tab" onclick="goTo(3)">
+  <button class="tab" onclick="goTo(4)">
     <span class="tab-icon">📝</span>
     <span class="tab-label">Register</span>
     <span class="tab-pts">Act.4 · 20pts</span>
+  </button>
+  <button class="tab" onclick="goTo(5)">
+    <span class="tab-icon">🎉</span>
+    <span class="tab-label">Outro</span>
+    <span class="tab-pts">All Done</span>
   </button>
   <div class="tab-ink" id="tabInk"></div>
 </nav>
@@ -624,6 +683,56 @@ body{
 <!-- ════════ VIEWPORT / SLIDE TRACK ════════ -->
 <div class="viewport">
   <div class="track" id="track">
+
+    <!-- ══════════ SLIDE 0 — INTRO ══════════ -->
+    <section class="section s0" id="act0">
+      <div class="section-head">
+        <div class="eyebrow">Capstone Demo &nbsp;·&nbsp; BSIT 1st Year</div>
+        <h2 class="section-title">HTML5 Project Showcase</h2>
+        <p class="section-desc">A swipeable walkthrough of four graded activities</p>
+      </div>
+
+      <div class="glass">
+        <div class="glass-bar" style="background:linear-gradient(90deg,var(--gold),var(--sky))"></div>
+        <div class="glass-glow" style="background:var(--gold)"></div>
+
+        <div class="intro-profile">
+          <div class="intro-avatar">GL</div>
+          <div>
+            <h1 class="a1-name" style="margin-bottom:2px">Gimbert Ludovice</h1>
+            <p class="a1-role" style="margin-bottom:0">BS Information Technology · 1st Year</p>
+          </div>
+        </div>
+
+        <hr class="divider-line"/>
+
+        <p class="micro">What's Inside</p>
+        <div class="menu-grid">
+          <button type="button" class="menu-item" onclick="goTo(1)">
+            <span class="info-icon">👤</span>
+            <span class="menu-name">About Me</span>
+            <span class="menu-pts">Activity 1 · 20 pts</span>
+          </button>
+          <button type="button" class="menu-item" onclick="goTo(2)">
+            <span class="info-icon">🏷️</span>
+            <span class="menu-name">Semantic HTML</span>
+            <span class="menu-pts">Activity 2 · 20 pts</span>
+          </button>
+          <button type="button" class="menu-item" onclick="goTo(3)">
+            <span class="info-icon">🖼️</span>
+            <span class="menu-name">Gallery</span>
+            <span class="menu-pts">Activity 3 · 30 pts</span>
+          </button>
+          <button type="button" class="menu-item" onclick="goTo(4)">
+            <span class="info-icon">📝</span>
+            <span class="menu-name">Registration</span>
+            <span class="menu-pts">Activity 4 · 20 pts</span>
+          </button>
+        </div>
+
+        <p class="swipe-cue">👉 Swipe, use the arrows, or tap a card to begin</p>
+      </div>
+    </section>
 
     <!-- ══════════ SLIDE 1 — ABOUT ME ══════════ -->
     <section class="section s1" id="act1">
@@ -659,7 +768,7 @@ body{
           <div class="info-box">
             <span class="info-icon">🎮</span>
             <p class="micro">Favorite Hobby</p>
-            <p>Playing chess, playing CodingGame, coding in Java, HTML5 &amp; CSS3, and solving logic puzzles</p>
+            <p>Playing chess, coding in Java, HTML5 &amp; CSS3, and solving logic puzzles</p>
           </div>
         </div>
       </div>
@@ -832,6 +941,64 @@ body{
       </div>
     </section>
 
+    <!-- ══════════ SLIDE 5 — CLOSING ══════════ -->
+    <section class="section s5" id="act5">
+      <div class="section-head">
+        <div class="eyebrow">Wrap Up &nbsp;·&nbsp; Thank You</div>
+        <h2 class="section-title">That's My HTML5 Project!</h2>
+        <p class="section-desc">4 Activities · Built with HTML5, CSS3 &amp; JavaScript</p>
+      </div>
+
+      <div class="glass">
+        <div class="glass-bar" style="background:linear-gradient(90deg,var(--rose),var(--violet))"></div>
+        <div class="glass-glow" style="background:var(--rose)"></div>
+
+        <p class="micro">Quick Recap</p>
+        <div class="menu-grid">
+          <button type="button" class="menu-item" onclick="goTo(1)">
+            <span class="info-icon">👤</span>
+            <span class="menu-name">About Me</span>
+            <span class="menu-pts">20 pts</span>
+          </button>
+          <button type="button" class="menu-item" onclick="goTo(2)">
+            <span class="info-icon">🏷️</span>
+            <span class="menu-name">Semantic HTML</span>
+            <span class="menu-pts">20 pts</span>
+          </button>
+          <button type="button" class="menu-item" onclick="goTo(3)">
+            <span class="info-icon">🖼️</span>
+            <span class="menu-name">Gallery</span>
+            <span class="menu-pts">30 pts</span>
+          </button>
+          <button type="button" class="menu-item" onclick="goTo(4)">
+            <span class="info-icon">📝</span>
+            <span class="menu-name">Registration</span>
+            <span class="menu-pts">20 pts</span>
+          </button>
+        </div>
+
+        <div class="total-score">
+          <span class="micro">Total Score</span>
+          <span class="total-num">90<small> / 90 pts</small></span>
+        </div>
+
+        <hr class="divider-line"/>
+
+        <p class="a1-para" style="text-align:center;margin-bottom:14px">
+          Thank you for watching! This project demonstrates semantic structure, accessible
+          markup, responsive layout, and interactive JavaScript — all built from scratch.
+        </p>
+
+        <div class="tag-shelf" style="margin-top:0">
+          <span class="tag tb">HTML5</span>
+          <span class="tag tt">CSS3</span>
+          <span class="tag tv">JavaScript</span>
+          <span class="tag tb">Responsive</span>
+          <span class="tag tv">Accessible</span>
+        </div>
+      </div>
+    </section>
+
   </div><!-- /track -->
 
   <!-- Arrow buttons -->
@@ -848,6 +1015,8 @@ body{
     <div class="dot" onclick="goTo(1)"></div>
     <div class="dot" onclick="goTo(2)"></div>
     <div class="dot" onclick="goTo(3)"></div>
+    <div class="dot" onclick="goTo(4)"></div>
+    <div class="dot" onclick="goTo(5)"></div>
   </div>
 </div><!-- /viewport -->
 
@@ -857,8 +1026,8 @@ body{
 <script>
 /* ════ STATE ════ */
 let current = 0;
-const TOTAL  = 4;
-const COLORS = ['#3b82f6','#0d9488','#34d399','#7c3aed'];
+const TOTAL  = 6;
+const COLORS = ['#f59e0b','#3b82f6','#0d9488','#34d399','#7c3aed','#f43f5e'];
 
 const track   = document.getElementById('track');
 const tabBar  = document.getElementById('navTabs');
@@ -884,7 +1053,7 @@ function goTo(idx){
   if(idx < 0 || idx >= TOTAL) return;
   current = idx;
 
-  track.style.transform = 'translateX(-' + (idx * 25) + '%)';
+  track.style.transform = 'translateX(-' + (idx * (100/TOTAL)) + '%)';
   tabs.forEach((t,i)=>t.classList.toggle('active', i===idx));
   dots.forEach((d,i)=>d.classList.toggle('active', i===idx));
   moveInk(idx);
